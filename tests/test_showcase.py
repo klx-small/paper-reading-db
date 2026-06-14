@@ -37,6 +37,12 @@ class ShowcaseAppTest(unittest.TestCase):
         self.assertIn("app.py", readme)
         self.assertIn("新增、编辑、导入和导出", readme)
 
+    def test_full_app_does_not_mutate_radio_key_after_render(self):
+        source = (ROOT / "app.py").read_text(encoding="utf-8")
+
+        self.assertIn("def navigate_to_page", source)
+        self.assertNotIn('st.session_state.current_page = "论文详情"', source)
+
 
 if __name__ == "__main__":
     unittest.main()

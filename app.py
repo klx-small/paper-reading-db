@@ -71,6 +71,11 @@ def initialize_state():
         st.session_state.current_page = PAGES[0]
 
 
+def navigate_to_page(page):
+    st.session_state.pending_page = page
+    st.rerun()
+
+
 def select_index(options, value, default=0):
     if value in options:
         return options.index(value)
@@ -410,8 +415,7 @@ def page_clusters():
                 cols = st.columns([1, 1, 5])
                 if cols[0].button("查看详情", key=f"cluster_detail_{paper['id']}"):
                     st.session_state.selected_paper_id = int(paper["id"])
-                    st.session_state.current_page = "论文详情"
-                    st.rerun()
+                    navigate_to_page("论文详情")
                 with cols[1].popover("Markdown"):
                     render_report_markdown_box(paper, key_prefix=f"cluster_{paper['id']}")
                 st.divider()
@@ -469,6 +473,10 @@ def page_import_export():
 
 def main():
     initialize_state()
+    if "pending_page" in st.session_state:
+        st.session_state.current_page = st.session_state.pending_page
+        del st.session_state.pending_page
+
     st.sidebar.title(APP_TITLE)
     st.sidebar.radio("功能导航", PAGES, key="current_page")
 
