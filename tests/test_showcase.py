@@ -30,6 +30,13 @@ class ShowcaseAppTest(unittest.TestCase):
         self.assertIn("showcase_app.py", readme)
         self.assertIn("Streamlit Community Cloud", readme)
 
+    def test_readme_mentions_full_version_deployment_entry(self):
+        readme = (ROOT / "README.md").read_text(encoding="utf-8")
+
+        self.assertIn("完整版", readme)
+        self.assertIn("app.py", readme)
+        self.assertIn("新增、编辑、导入和导出", readme)
+
 
 if __name__ == "__main__":
     unittest.main()

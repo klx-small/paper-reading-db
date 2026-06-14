@@ -4,8 +4,8 @@
 
 项目包含两个入口：
 
-- `showcase_app.py`：公开展示版，适合部署到 Streamlit Community Cloud 后分享给别人浏览。
-- `app.py`：本地管理版，适合自己新增、编辑、导入和导出论文数据。
+- `app.py`：完整版，包含新增、编辑、删除、导入和导出论文数据等全部功能。
+- `showcase_app.py`：只读展示版，只适合公开浏览，不提供数据修改入口。
 
 ## 功能
 
@@ -53,15 +53,7 @@ pip install -r requirements.txt
 py -m pip install -r requirements.txt
 ```
 
-## 启动公开展示版
-
-```bash
-streamlit run showcase_app.py
-```
-
-展示版只用于浏览，不提供数据修改入口，适合上线分享。
-
-## 启动本地管理版
+## 启动完整版
 
 ```bash
 streamlit run app.py
@@ -75,20 +67,34 @@ py -m streamlit run app.py
 
 启动后，浏览器会打开本地页面。若没有自动打开，可以在终端提示中复制本地地址访问。
 
+## 启动只读展示版
+
+```bash
+streamlit run showcase_app.py
+```
+
+展示版只用于浏览，不提供数据修改入口。
+
 ## 上线到 Streamlit Community Cloud
 
 1. 将本项目上传到 GitHub 仓库。
 2. 打开 Streamlit Community Cloud。
 3. 创建新应用时选择该 GitHub 仓库。
-4. 入口文件填写：
+4. 如果要上线完整版，入口文件填写：
+
+```text
+app.py
+```
+
+5. 如果只想让别人浏览，不想让别人修改数据，入口文件填写：
 
 ```text
 showcase_app.py
 ```
 
-5. 部署完成后，Streamlit 会生成一个可以分享给别人访问的网址。
+6. 部署完成后，Streamlit 会生成一个可以分享给别人访问的网址。
 
-注意：`data/papers.db` 会随仓库一起公开，适合展示样例数据。如果后续要让多人在线写入和长期保存数据，建议改用云数据库。
+注意：完整版上线后，访问链接的人可以使用新增、编辑、导入和导出功能；`data/papers.db` 也会随仓库一起公开。如果后续要让多人在线写入和长期保存数据，建议改用云数据库。
 
 ## Excel 导入
 
